@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h2>Welcome, {{ current_user.username }}</h2>
+    <h3>System Stats</h3>
+    <p>CPU Usage: {{ cpu_percent }}%</p>
+    <p>Memory Usage: {{ mem_percent }}%</p>
+    <p>Disk Usage: {{ disk_percent }}%</p>
+
+    <h3>Calculator</h3>
+    <form id="calculatorForm">
+        <input type="number" id="num1" name="num1" step="any" required>
+        <select id="operation" name="operation">
+            <option value="add">+</option>
+            <option value="subtract">-</option>
+            <option value="multiply">*</option>
+            <option value="divide">/</option>
+        </select>
+        <input type="number" id="num2" name="num2" step="any" required>
+        <button type="submit">Calculate</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        $(document).ready(function() {
+            $('#calculatorForm').submit(function(e) {
+                e.preventDefault();
+                var num1 = $('#num1').val();
+                var num2 = $('#num2').val();
+                var operation = $('#operation').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/calculator',
+                    data: {num1: num1, num2: num2, operation: operation},
+                    success: function(response) {
+                        $('#result').text('Result: ' + response.result);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
