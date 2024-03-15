@@ -114,4 +114,4 @@ def setup_admin():
         return render_template('setup_admin.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
