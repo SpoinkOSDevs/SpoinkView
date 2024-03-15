@@ -113,14 +113,5 @@ def setup_admin():
             return redirect(url_for('login'))
         return render_template('setup_admin.html')
 
-class User(UserMixin, db.Model):
-    """
-    User Model
-
-    Represents a user in the system.
-    """
-    ...
-
-
 if __name__ == '__main__':
     app.run(debug=True)
