@@ -1,3 +1,8 @@
+"""
+Flask Module
+
+This module provides the Flask application for user management.
+"""
 
 import subprocess
 import psutil
@@ -107,6 +112,15 @@ def setup_admin():
             flash('Admin account created successfully.')
             return redirect(url_for('login'))
         return render_template('setup_admin.html')
+
+class User(UserMixin, db.Model):
+    """
+    User Model
+
+    Represents a user in the system.
+    """
+    ...
+
 
 if __name__ == '__main__':
     app.run(debug=True)
