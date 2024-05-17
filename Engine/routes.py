@@ -6,12 +6,6 @@ from flask_login import login_user, login_required, current_user, logout_user
 from app import app, db, login_manager
 from models import User
 
-# Initialize database
-try:
-    db.create_all()
-except OperationalError as e:
-    app.logger.error(f"Database initialization error: {e}")
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
