@@ -3,7 +3,6 @@
 import os
 import subprocess
 import sys
-import argparse
 from flask import Flask, g
 from sqlalchemy import create_engine, Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
@@ -92,7 +91,7 @@ After=network.target
 User={os.getlogin()}
 Group=${os.getgroups()[0]}
 WorkingDirectory={os.getcwd()}
-ExecStart=/usr/bin/python {os.path.abspath(__file__)}
+ExecStart=/usr/bin/python {os.path.abspath(__file__)} &
 Restart=always
 
 [Install]
@@ -116,15 +115,13 @@ def run_flask_app():
     except Exception as e:
         logging.error("Failed to run Flask app: %s", e)
 
-def parse_arguments():
-    parser = argparse.ArgumentParser(description='Run Flask app.')
-    parser.add_argument('-P', '--persistent', action='store_true', help='Run Flask app as a persistent service.')
-    return parser.parse_args()
-
 if __name__ == '__main__':
-    args = parse_arguments()
-
-    if args.persistent:
+    if len(sys.argv) > 1 and (sys.argv[1] == '-P' or sys.argv[1] == '--persistent'):
         create_systemd_service()
+        try:
+            subprocess.Popen(['python', 'app.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            logging.debug("Started app.py in the background.")
+        except Exception as e:
+            logging.error("Failed to start app.py: %s", e)
     else:
         run_flask_app()
