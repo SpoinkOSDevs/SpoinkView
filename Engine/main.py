@@ -63,7 +63,7 @@ def close_session(exception=None):
         session.close()
 
 # Add an admin user if not already present
-@app.before_first_request
+@app.before_request
 def create_admin_user():
     session = get_session()
     admin_user = session.query(User).filter_by(username='Admin').first()
@@ -119,7 +119,6 @@ def run_flask_app():
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Run Flask app.')
     parser.add_argument('-P', '--persistent', action='store_true', help='Run Flask app as a persistent service.')
-    parser.add_argument('--help', action='help', help='Show this help message and exit.')
     return parser.parse_args()
 
 if __name__ == '__main__':
