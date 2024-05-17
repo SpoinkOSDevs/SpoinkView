@@ -15,3 +15,10 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+# Prevents the creation of multiple instances of the db object
+def init_db(app):
+    if not hasattr(app, 'extensions'):
+        app.extensions = {}
+    if 'sqlalchemy' not in app.extensions:
+        db.init_app(app)
