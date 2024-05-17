@@ -45,6 +45,6 @@ def hello():
 # Run the Flask app
 if __name__ == '__main__':
     # Start app.py in the background
-    subprocess.Popen(['python', 'app.py'])
+    subprocess.Popen(['python3', 'app.py'])
     # Run Flask app on port 8000
     app.run(debug=True, port=8000, threaded=True)
