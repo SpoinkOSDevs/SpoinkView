@@ -1,5 +1,6 @@
 # main.py
 
+import subprocess
 from flask import Flask
 from sqlalchemy import create_engine, Column, String, Integer
 from sqlalchemy.ext.declarative import declarative_base
@@ -39,8 +40,11 @@ if not admin_user:
 # Define a route
 @app.route('/')
 def hello():
-    return 'Hello, Flask is running in the background!'
+    return 'Hello, Flask is running on port 8000!'
 
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True)
+    # Start app.py in the background
+    subprocess.Popen(['python', 'app.py'])
+    # Run Flask app on port 8000
+    app.run(debug=True, port=8000, threaded=True)
