@@ -4,7 +4,8 @@ from models import db, User
 app = Flask(__name__)
 
 # Load configuration from the models file
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+DATABASE_PATH = '/var/lib/flask_app/users.db'
+DATABASE_URI = f'sqlite:///{DATABASE_PATH}'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Disable tracking modifications to improve performance
 
 # Initialize the SQLAlchemy object with the Flask app
