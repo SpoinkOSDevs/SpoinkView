@@ -119,7 +119,7 @@ if __name__ == '__main__':
     if len(sys.argv) > 1 and (sys.argv[1] == '-P' or sys.argv[1] == '--persistent'):
         create_systemd_service()
         try:
-            subprocess.Popen(['python', 'app.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.Popen(['python3', 'app.py'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             logging.debug("Started app.py in the background.")
         except Exception as e:
             logging.error("Failed to start app.py: %s", e)
