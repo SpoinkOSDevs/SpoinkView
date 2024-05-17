@@ -1,6 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
+# Define the database URI
+DATABASE_URI = 'sqlite:///users.db'
+
+# Initialize SQLAlchemy object without binding to the Flask app yet
 db = SQLAlchemy()
 
 class User(db.Model):
@@ -15,10 +19,3 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-
-# Prevents the creation of multiple instances of the db object
-def init_db(app):
-    if not hasattr(app, 'extensions'):
-        app.extensions = {}
-    if 'sqlalchemy' not in app.extensions:
-        db.init_app(app)
