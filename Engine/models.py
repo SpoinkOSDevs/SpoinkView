@@ -1,8 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-# Define the database URI
-DATABASE_URI = 'sqlite:///users.db'
+DATABASE_PATH = '/var/lib/flask_app/users.db'
+DATABASE_URI = f'sqlite:///{DATABASE_PATH}'
 
 # Initialize SQLAlchemy object without binding to the Flask app yet
 db = SQLAlchemy()
